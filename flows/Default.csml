@@ -1,0 +1,4 @@
+start:
+  say Image("https://media.giphy.com/media/3o6ozC2VM9R0XSMNKo/giphy.gif")
+  say "I did not understand what you meant!"
+  goto flow MainMenu

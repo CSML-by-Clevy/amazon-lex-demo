@@ -1,0 +1,69 @@
+start:
+  say "OK, let's see how we can help you with your issue!"
+  goto select_device_type
+
+
+select_device_type:
+  // In this step, we need to understand what type of device the user is having issues with,
+  // so we display buttons for them to select the device type
+  say QuickReply(
+    "What device are you having issues with?",
+    buttons=[
+      Button("💻 laptop", payload="BTN_LAPTOP", value="laptop") as btn_laptop,
+      Button("🖥 desktop", payload="BTN_DESKTOP", value="desktop") as btn_desktop,
+      Button("📱 smartphone", payload="BTN_PHONE", value="phone") as btn_phone,
+    ]
+  )
+  hold
+
+  do selected = event.match(btn_desktop, btn_laptop, btn_phone)
+  if (!selected) {
+    say "I'm sorry, {{event}} is not a device we can help you with..."
+    goto flow MainMenu
+  }
+
+  remember device_type = selected.value
+  say "OK! I understand that you are having issues with your {{device_type}}"
+ 
+  goto get_email
+
+
+get_email:
+  // we may already know the user's email from a previous interaction
+  // so instead of asking for it again, we can just use the value that we have
+  if (email) {
+    say Question(
+      "Please confirm your email address",
+      buttons=[Button(email)],
+      button_type="quick_reply"
+    )
+  } else {
+    say "What is your email address?"
+  }
+  hold
+
+  if (!event.is_email()) {
+    say "This does not seem to be a valid email address..."
+    goto get_email
+  }
+
+  remember email = event
+  goto create_ticket
+
+
+create_ticket:
+  say "Great! Let's create a ticket together."
+  say Typing(1500)
+  say "Please describe your issue:"
+  hold
+
+  remember issue = event
+
+  // Create the ticket in a ticketing service such as Service Now or Zendesk
+  // This can be done by installing one of the built-in CSML apps
+  // or by importing your own connector to your own APIs!
+  // For the demo, let's just comment out this line ;-)
+  // do ticket = Fn("ticketing_service", subject="issue with {{device_type}}", from=email, content=issue)
+
+  say "Thanks! Your ticket has been created, and an agent will be in touch shortly. Bye!"
+  goto end

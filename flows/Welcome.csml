@@ -1,0 +1,29 @@
+start:
+  // on the first visit of this user, we want to learn
+  // some basic information about them
+  if (!firstname) goto first_time
+  
+  say "Hi {{firstname}}!"
+  say Image("https://media.giphy.com/media/dw36yjtOAtuSZyxEJG/giphy.gif")
+  say Wait(1000)
+  say Typing(1500)
+  say "Glad to see you again!"
+  goto flow MainMenu
+  
+// this step is only triggered 
+first_time:
+  say "Hello there!"
+  say Image("https://media.giphy.com/media/xT1R9z5x4Hp3LJo02k/giphy.gif")
+  say Wait(1500)
+  say Typing(1500)
+  say "I see we haven't met yet..."
+  say Typing(1000)
+  say "What's your name?"
+  hold
+  
+  // This will save their firstname forever so we never
+  // have to ask for it again
+  remember firstname = event
+  say "Alright {{firstname}}, it's a pleasure to meet you!"
+  goto flow MainMenu
+  

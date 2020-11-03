@@ -1,0 +1,23 @@
+start:
+  say Typing(1500)
+  say "As you know, I'm here to help you with any IT-related issues."
+  say "How can I help you today?"
+  say Carousel([
+    Card(
+      title="IT Support",
+      subtitle="I'm having issues with my computer",
+      image_url="https://static.turbosquid.com/Preview/001174/372/PK/DHQ.jpg",
+      buttons=[
+        Button("Computer issue") as btn_computer
+      ]
+    ),
+    // You could add other cards here to other parts of the chatbot
+    // In this example, let's just work with the "computer" problem for now!
+  ])
+ 
+  hold
+
+  // make sure that the user input is one of the accepted values
+  if (event.match(btn_computer)) goto flow CreateSupportTicket
+  else say "I'm sorry, I did not get this..."
+  goto start

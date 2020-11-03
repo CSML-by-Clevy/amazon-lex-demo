@@ -1,0 +1,31 @@
+{
+  "id": "51754f91-1df9-413b-86a3-30030f9924a1",
+  "name": "Amazon Lex Demo",
+  "description": null,
+  "default_flow": "Default",
+  "flows": [
+    {
+      "name": "CreateSupportTicket",
+      "description": null,
+      "commands": [
+        "declare_issue"
+      ]
+    },
+    {
+      "name": "Default",
+      "description": null,
+      "commands": []
+    },
+    {
+      "name": "MainMenu",
+      "commands": []
+    },
+    {
+      "name": "Welcome",
+      "commands": []
+    }
+  ],
+  "files": [],
+  "functions": [],
+  "apps": []
+}
